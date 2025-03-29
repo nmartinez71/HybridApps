@@ -1,28 +1,47 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from "react";
+import { View, StatusBar } from "react-native";
+import styles from "../assets/styles";
+import Box from "../assets/Box";
+import Column from "../assets/Column";
+import Row from "../assets/Row";
+
+
 
 export default function Asmt1() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>This is Assignment 1</Text>
-      <Text style={styles.details}></Text>
+      <StatusBar hidden={false} />
+      <Row>
+        <Column>
+          <Box>#1</Box>
+          <Box>#2</Box>
+        </Column>
+        <Column>
+          <Box>#3</Box>
+          <Box>#4</Box>
+        </Column>
+      </Row>
+      <Row>
+        <Column>
+          <Box>#5</Box>
+          <Box>#6</Box>
+        </Column>
+        <Column>
+          <Box>#7</Box>
+          <Box>#8</Box>
+        </Column>
+      </Row>
+      <Row>
+        <Column>
+          <Box>#9</Box>
+          <Box>#10</Box>
+        </Column>
+        <Column>
+          <Box>#11</Box>
+          <Box>#12</Box>
+        </Column>
+      </Row>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#EBEAED',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  details: {
-    fontSize: 18,
-    marginTop: 20,
-  },
-});

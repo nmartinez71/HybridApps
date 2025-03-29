@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Task from './components/Task';
 import Asmt1 from './screens/Asmt1'; 
+import Asmt2 from './screens/Asmt2'; 
+import Asmt3 from './screens/Asmt3';
 
 const Stack = createStackNavigator();
 
@@ -13,7 +15,9 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Asmt1" component={Asmt1} />  
+        <Stack.Screen name="Assignment 1" component={Asmt1} />
+        <Stack.Screen name="Assignment 2" component={Asmt2} /> 
+        <Stack.Screen name="Assignment 3" component={Asmt3} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -23,20 +27,19 @@ function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.tasksWrapper}>
-        <Text style={styles.sectionTitle}>Today's Tasks</Text>
+        <Text style={styles.entryText}> This Home page is to navigate to the different assignments assigned throughout the course. It was easier to navigate this way. </Text>
+        <Text style={styles.sectionTitle}>Module 2</Text>
         <ScrollView>
           <View style={styles.items}>
-            <TouchableOpacity onPress={() => navigation.navigate('Asmt1')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Assignment 1')}>
               <Task text={'Assignment 1'} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Asmt2')}>
-              <Task text={'Task 2'} />
+            <TouchableOpacity onPress={() => navigation.navigate('Assignment 2')}>
+              <Task text={'Assignment 2'} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('')}>
-              <Task text={'Task 3'} />
+            <TouchableOpacity onPress={() => navigation.navigate('Assignment 3')}>
+              <Task text={'Assignment 3'} />
             </TouchableOpacity>
-            <Task text={'Task 4'} />
-            <Task text={'Task 5'} />
           </View>
         </ScrollView>
       </View>
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EBEAED'
   },
   tasksWrapper:  {
-    paddingTop: 80,
+    paddingTop: 10,
     paddingHorizontal: 20
   },
   sectionTitle: {
@@ -63,4 +66,7 @@ const styles = StyleSheet.create({
   items: {
     marginTop: 30,
   },
+  entryText: {
+    fontSize: 15
+  }
 });
