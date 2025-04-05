@@ -5,8 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Task from './components/Task';
 import Asmt1 from './screens/Asmt1'; 
-import Asmt2 from './screens/Asmt2'; 
-import Asmt3 from './screens/Asmt3';
+import TodoApp from './screens/TodoApp';
+import StarWarsAPI from './screens/StarWarsAPI';
 
 const Stack = createStackNavigator();
 
@@ -16,8 +16,8 @@ export default function App() {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Assignment 1" component={Asmt1} />
-        <Stack.Screen name="Assignment 2" component={Asmt2} /> 
-        <Stack.Screen name="Assignment 3" component={Asmt3} />
+        <Stack.Screen name="StarWarsAPI" component={StarWarsAPI} /> 
+        <Stack.Screen name="TodoApp" component={TodoApp} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -27,21 +27,26 @@ function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.tasksWrapper}>
-        <Text style={styles.entryText}> This Home page is to navigate to the different assignments assigned throughout the course. It was easier to navigate this way. </Text>
-        <Text style={styles.sectionTitle}>Module 2</Text>
+
+        <Text style={styles.sectionTitle}>Hybrid Apps</Text>
+        <Text style={styles.entryText}> This Home page is to navigate to the different assignments assigned throughout the course. It was easier to navigate this way.</Text>
+        
         <ScrollView>
           <View style={styles.items}>
             <TouchableOpacity onPress={() => navigation.navigate('Assignment 1')}>
               <Task text={'Assignment 1'} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Assignment 2')}>
-              <Task text={'Assignment 2'} />
+            <TouchableOpacity onPress={() => navigation.navigate('StarWarsAPI')}>
+              <Task text={'Star Wars App'} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Assignment 3')}>
-              <Task text={'Assignment 3'} />
+            <TouchableOpacity onPress={() => navigation.navigate('TodoApp')}>
+              <Task text={'Todo App'} />
+              <Text>Updated for Module 3 Assignment 2</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
+
+
       </View>
       <StatusBar style="auto" />
     </View>

@@ -6,7 +6,6 @@ import Column from "../assets/Column";
 import Row from "../assets/Row";
 
 
-
 export default function Asmt1() {
   return (
     <View style={styles.container}>
@@ -19,26 +18,6 @@ export default function Asmt1() {
         <Column>
           <Box>#3</Box>
           <Box>#4</Box>
-        </Column>
-      </Row>
-      <Row>
-        <Column>
-          <Box>#5</Box>
-          <Box>#6</Box>
-        </Column>
-        <Column>
-          <Box>#7</Box>
-          <Box>#8</Box>
-        </Column>
-      </Row>
-      <Row>
-        <Column>
-          <Box>#9</Box>
-          <Box>#10</Box>
-        </Column>
-        <Column>
-          <Box>#11</Box>
-          <Box>#12</Box>
         </Column>
       </Row>
     </View>

@@ -10,7 +10,7 @@ import Spaceships from './Spaceships';
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
-export default function Asmt2() {
+export default function StarWarsAPI() {
     if (Platform.OS === "ios") {
       return (
         <Tab.Navigator>
@@ -30,5 +30,3 @@ export default function Asmt2() {
     }
   }
 
-const styles = StyleSheet.create({
-});

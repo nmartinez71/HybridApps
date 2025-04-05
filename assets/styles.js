@@ -43,4 +43,10 @@ export default StyleSheet.create({
     justifyContent: "space-around",
     alignSelf: "stretch",
   },
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around", 
+    padding: 10,
+  },
 });
