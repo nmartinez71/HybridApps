@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, StatusBar, FlatList, Modal } from "react-native";
-import styles from "../assets/styles";
-import Input from '../components/Input';
+import { View, StatusBar, FlatList, Button, Modal, Text } from "react-native";
 import Box from "../assets/Box";
-
-
+import Input from '../components/Input';
+import styles from "../assets/styles";
 
 export default function Spaceships() {
    const [spaceships, setSpaceships] = useState([]);
