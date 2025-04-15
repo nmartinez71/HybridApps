@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, StatusBar, FlatList } from "react-native";
+import { View, StatusBar, FlatList, Modal } from "react-native";
 import styles from "../assets/styles";
+import Input from '../components/Input';
 import Box from "../assets/Box";
 
 
 
 export default function Spaceships() {
-
-
    const [spaceships, setSpaceships] = useState([]);
+   const [submittedText, setSubmittedText] = useState("");
+    const [modalVisible, setModalVisible] = useState(false);
   
     useEffect(() => {
       fetchSpaceships();
@@ -25,6 +26,11 @@ export default function Spaceships() {
     
     };
 
+    const handleSubmit = (text) => {
+      setSubmittedText(text); 
+      setModalVisible(true); 
+    };
+
    const renderItem = ({ item }) => (
         <View style={styles.grid}>
           <Box>{item.name}</Box>
@@ -36,6 +42,21 @@ export default function Spaceships() {
   return (
     <View style={styles.container}>
       <StatusBar hidden={false} />
+
+      <Input label="Search a ship name" onSubmit={handleSubmit}/>
+      
+      <Modal
+      animationType="fade"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => setModalVisible(false)}
+      >
+      <View style={styles.modalView}>
+        <Text style={styles.modalText}>You submitted: {submittedText}</Text>
+        <Button title="Close" onPress={() => setModalVisible(false)} />
+      </View>
+        </Modal>
+
       <FlatList
         data={spaceships}
         renderItem={renderItem}

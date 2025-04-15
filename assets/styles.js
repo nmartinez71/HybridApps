@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, StatusBar } from "react-native";
+import { Platform, StyleSheet, StatusBar, Dimensions } from "react-native";
 
 export default StyleSheet.create({
   container: {
@@ -49,4 +49,8 @@ export default StyleSheet.create({
     justifyContent: "space-around", 
     padding: 10,
   },
+  map: {
+    width: '95%',
+    height: '80%'
+  }
 });
