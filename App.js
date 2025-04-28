@@ -39,7 +39,7 @@ function Home({ navigation }) {
               <Task text={'Assignment 1'} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('StarWarsAPI')}>
-              <Text>Updated for Module 5, boxes are Swipeable w/ Animation and Image. </Text>
+              <Text>Updated for Module 6 </Text>
               <Task text={'Star Wars App'} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('TodoApp')}>
