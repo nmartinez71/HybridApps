@@ -3,16 +3,16 @@ import { View, StatusBar, Modal, Text, Button, ScrollView } from "react-native";
 import Box from "../assets/Box";
 import Input from '../components/Input';
 import styles from "../assets/styles";
-import useVisibility from "../hooks/useVisibility"; 
+import useVisibility from "../hooks/useVisibility";
 import HeaderImage from '../components/HeaderImage';
 
-export default function Planets() {
+export default function Planets({ navigation }) {
   const [planets, setPlanets] = useState([]);
-  const [submittedText, setSubmittedText] = useState("");
+  const [inputText, setInputText] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedPlanet, setSelectedPlanet] = useState("");
 
-  
   const { visibility, hideItem, resetVisibility } = useVisibility(planets);
 
   useEffect(() => {
@@ -22,10 +22,7 @@ export default function Planets() {
   const fetchPlanets = async () => {
     try {
       const response = await fetch("https://www.swapi.tech/api/planets");
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const planetData = await response.json();
       setPlanets(planetData.results);
     } catch (error) {
@@ -33,28 +30,42 @@ export default function Planets() {
     }
   };
 
-  const handleSubmit = (text) => {
-    setSubmittedText(text);
-    setModalVisible(true);
+  const handleSearchInput = (text) => {
+    setInputText(text);
   };
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setSearchQuery(inputText);
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [inputText]);
 
   const handleSwipe = (planetName, uid) => {
     setSelectedPlanet(planetName);
     setModalVisible(true);
-    hideItem(uid); 
+    hideItem(uid);
+    setTimeout(() => {
+      setModalVisible(false);
+      resetVisibility();
+      navigation.navigate("Details", { title: planetName });
+    }, 500);
   };
 
   const handleModalClose = () => {
     setModalVisible(false);
-    resetVisibility(); 
+    resetVisibility();
   };
+
+  const filteredPlanets = planets.filter((item) =>
+    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <View style={styles.container}>
       <StatusBar hidden={false} />
-      <HeaderImage/>
-
-      <Input label="Search a planet name" onSubmit={handleSubmit} />
+      <HeaderImage />
+      <Input label="Search a planet name" onChangeText={handleSearchInput} />
 
       <Modal
         animationType="fade"
@@ -64,21 +75,21 @@ export default function Planets() {
       >
         <View style={styles.modalView}>
           <Text style={styles.modalText}>
-            {selectedPlanet ? `Planet: ${selectedPlanet}` : `You submitted: ${submittedText}`}
+            {selectedPlanet ? `Planet: ${selectedPlanet}` : "No planet selected"}
           </Text>
-          <Button title="Close" onPress={handleModalClose} />
+          <Button title="Open Details" onPress={handleModalClose} />
         </View>
       </Modal>
 
-      <ScrollView style={{ width: '100%' }}>
+      <ScrollView style={{ width: "100%" }}>
         <View style={styles.grid}>
-          {planets.map(item => (
-            visibility[item.uid] && ( 
+          {filteredPlanets.map((item) =>
+            visibility[item.uid] ? (
               <Box key={item.uid} onSwipe={() => handleSwipe(item.name, item.uid)}>
                 {item.name}
               </Box>
-            )
-          ))}
+            ) : null
+          )}
         </View>
       </ScrollView>
     </View>

@@ -6,12 +6,13 @@ import styles from "../assets/styles";
 import useVisibility from "../hooks/useVisibility";
 import HeaderImage from '../components/HeaderImage';
 
-export default function Spaceships() {
+export default function Spaceships({ navigation }) {
   const [spaceships, setSpaceships] = useState([]);
-  const [submittedText, setSubmittedText] = useState("");
+  const [inputText, setInputText] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedSpaceship, setSelectedSpaceship] = useState(""); 
-  
+  const [selectedSpaceship, setSelectedSpaceship] = useState("");
+
   const { visibility, hideItem, resetVisibility } = useVisibility(spaceships);
 
   useEffect(() => {
@@ -21,41 +22,50 @@ export default function Spaceships() {
   const fetchSpaceships = async () => {
     try {
       const response = await fetch("https://www.swapi.tech/api/starships/");
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const spaceshipData = await response.json();
-      setSpaceships(spaceshipData.results); 
+      setSpaceships(spaceshipData.results);
     } catch (error) {
       console.error("Failed to fetch spaceships:", error);
     }
   };
 
-  const handleSubmit = (text) => {
-    setSubmittedText(text);
-    setModalVisible(true);
+  const handleSearchInput = (text) => {
+    setInputText(text);
   };
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setSearchQuery(inputText);
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [inputText]);
+
   const handleSwipe = (spaceshipName, uid) => {
-    setSelectedSpaceship(spaceshipName); 
-    setModalVisible(true); 
-    hideItem(uid); 
+    setSelectedSpaceship(spaceshipName);
+    setModalVisible(true);
+    hideItem(uid);
+    setTimeout(() => {
+      setModalVisible(false);
+      resetVisibility();
+      navigation.navigate("Details", { title: spaceshipName });
+    }, 500);
   };
 
   const handleModalClose = () => {
     setModalVisible(false);
-    resetVisibility(); 
+    resetVisibility();
   };
+
+  const filteredSpaceships = spaceships.filter((item) =>
+    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <View style={styles.container}>
       <StatusBar hidden={false} />
-
-      <HeaderImage/>
-
-
-      <Input label="Search a spaceship name" onSubmit={handleSubmit} />
+      <HeaderImage />
+      <Input label="Search a spaceship name" onChangeText={handleSearchInput} />
 
       <Modal
         animationType="fade"
@@ -65,21 +75,21 @@ export default function Spaceships() {
       >
         <View style={styles.modalView}>
           <Text style={styles.modalText}>
-            {selectedSpaceship ? `Spaceship: ${selectedSpaceship}` : `You submitted: ${submittedText}`}
+            {selectedSpaceship ? `Spaceship: ${selectedSpaceship}` : "No spaceship selected"}
           </Text>
-          <Button title="Close" onPress={handleModalClose} />
+          <Button title="Open Details" onPress={handleModalClose} />
         </View>
       </Modal>
 
       <ScrollView style={{ width: "100%" }}>
         <View style={styles.grid}>
-          {spaceships.map((item) => (
-            visibility[item.uid] && ( 
+          {filteredSpaceships.map((item) =>
+            visibility[item.uid] ? (
               <Box key={item.uid} onSwipe={() => handleSwipe(item.name, item.uid)}>
                 {item.name}
               </Box>
-            )
-          ))}
+            ) : null
+          )}
         </View>
       </ScrollView>
     </View>

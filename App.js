@@ -8,6 +8,7 @@ import Asmt1 from './screens/Asmt1';
 import TodoApp from './screens/TodoApp';
 import StarWarsAPI from './screens/StarWarsAPI';
 import Geolocation from './screens/Geolocation';
+import Details from './screens/Details';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ export default function App() {
         <Stack.Screen name="StarWarsAPI" component={StarWarsAPI} /> 
         <Stack.Screen name="TodoApp" component={TodoApp} />
         <Stack.Screen name="Geolocation" component={Geolocation} />
+        <Stack.Screen name="Details" component={Details} options={({ route }) => ({ title: route.params.title })} />
       </Stack.Navigator>
     </NavigationContainer>
   );
